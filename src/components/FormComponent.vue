@@ -1,17 +1,16 @@
-<template>  
+<template>
     <div class="dynamic-form">
         <form @submit.prevent="onSubmit" class="form-group">
             <div v-for="(field) in fieldDefinitions" :key="field.id" class="form-field">
                 <label>{{ field.label }}</label>
                 <component :is="getComponentName(field)" :field="field"
-                    :modelValue="modelValue ? modelValue[field.id] : ''" 
+                    :modelValue="modelValue ? modelValue[field.id] : ''"
                     @update="updateFormData"
                     :ref="el => setFieldRef(field, el)" />
             </div>
             <div class="button-container">
                 <button type="submit" class="button primary">Guardar</button>
             </div>
-
         </form>
         <label id="result-label">Result:</label><br/>
         <textarea id="result" rows="10" cols="50" disabled></textarea>
@@ -77,8 +76,8 @@ const onSubmit = (event) => {
 const getComponentName = (field) => {
 
     let compName = field.type.charAt(0).toUpperCase() + field.type.slice(1);
-    
-    // Convert to CamelCase 
+
+    // Convert to CamelCase
     compName = compName.replace(/[_-](\w)/g, (_, match) => match.toUpperCase());
 
     return defineAsyncComponent(() => import(`./fields/${compName}Field.vue`));
@@ -120,8 +119,7 @@ input, select, textarea {
 }
 .button-container {
     text-align: center;
-    margin-bottom: 20px;
-
+    margin-top: 35px;
     button {
         margin: auto;
     }
